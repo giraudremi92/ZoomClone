@@ -6,8 +6,28 @@
   <div class="column is-two-thirds">
 	<div class="column">
 	<h1 class="title is-1">Visio App</h1>	
+	<div class="level">
+	<div class="level-left">
+ <button id="invited" class="button is-success is-outlined is-right">
+    <span class="icon is-small">
+      <i class="fas fa-plus"></i>
+    </span>
+    <span>Invite</span>
+  </button>
 	</div>    
-      <div class="column col3">
+<div class="level-right">
+ <button id="invited" class="button is-static is-success is-inverted is-outlined is-right">
+    <span class="icon is-small">
+      <i class="fas fa-user-friends"></i>
+    </span>
+    <span>10</span>
+  </button>
+
+</div>
+</div>
+
+</div>
+     <div class="column col3">
 <div class="columns is-multiline">
 
 
@@ -95,7 +115,7 @@ overflow-y: scroll;
 }
 
 img{
-width: 30%;
+width: 33%;
 padding: 1rem;
 }
 </style>
