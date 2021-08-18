@@ -15,6 +15,10 @@
     <span>Invite</span>
   </button>
 	</div>    
+<div class="level-item">
+  <button class="button is-info">Join</button>
+</div>
+
 <div class="level-right">
  <button id="invited" class="button is-static is-success is-inverted is-outlined is-right">
     <span class="icon is-small">
@@ -42,6 +46,42 @@
 
 </div>
    </div>
+
+<div class="level">
+
+<div class="level-item">
+ <button id="invited" class="button  is-success is-inverted is-outlined is-large ">
+    <span class="icon">
+      <i class="fas fa-volume-up"></i>
+    </span>
+  </button>
+
+
+</div>
+
+<div class="level-item">
+ <button id="invited" class="button  is-success is-inverted is-outlined is-large ">
+    <span class="icon">
+      <i class="fas fa-desktop"></i>
+    </span>
+  </button>
+
+
+
+</div>
+
+<div class="level-item">
+ <button id="invited" class="button is-success is-inverted is-outlined is-large ">
+    <span class="icon">
+      <i class="fas fa-microphone"></i>
+    </span>
+  </button>
+
+
+</div>
+
+</div>
+
   </div>
 
   <div class="column" style="padding: 2rem;">
@@ -51,11 +91,54 @@
 </span> Chat</h2>
 
 	</div>	
-	<div class="columns is-mobile">
-      <div class="column col4" >
-        <p class="col-chat" > chat messages component</p>
-      </div>
-    </div>
+	
+	<div class="column col-chat" >
+	
+	<div class="notification">
+		<div class="title is-4">13245679812345</div>
+		<p>jje ne suis pas sur que le mot anticonstitutionnelemnt rentre bien</p>
+	</div>
+
+<div class="notification">
+  <button class="delete"></button>
+  Lorem ipsum dolor sit amet, consectetur
+  adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+</div>
+
+
+<div class="notification">
+  <button class="delete"></button>
+  Lorem ipsum dolor sit amet, consectetur
+  adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+</div>
+
+<div class="notification">
+  <button class="delete"></button>
+  Lorem ipsum dolor sit amet, consectetur
+  adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+</div>
+
+<div class="notification">
+  <button class="delete"></button>
+  Lorem ipsum dolor sit amet, consectetur
+  adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+</div>
+	</div>
+
+	<div class="column col-input">
+<div class="field has-addons">
+  <div class="control">
+    <input class="input" type="text" placeholder="Type a message">
+  </div>
+  <div class="control">
+    <a class="button is-success">
+     Send
+    </a>
+  </div>
+</div>
+
+	</div>
+
   </div>
 </div>
 
@@ -76,12 +159,13 @@ export default {
 @import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css";
 
 html,body {
-    background-color: red;
+background-color: #21242C;
+
+
 }
 
 #app{
 background-color: #21242C;
-color: white;
 }
 
 .title{
@@ -110,12 +194,24 @@ margin-top: 3rem;
 
 
 .col-chat{
-max-height:66vh;
+max-height:70vh;
 overflow-y: scroll;
+margin-top: 3rem;
+}
+
+.col-input{
+margin-top:1rem;
+
 }
 
 img{
 width: 33%;
 padding: 1rem;
 }
+
+.level{
+margin-top:0.6rem;
+
+}
+
 </style>
