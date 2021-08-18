@@ -1,4 +1,6 @@
 <template>
+
+
 <div class="container is-widescreen" >
 
 
@@ -8,7 +10,7 @@
 	<h1 class="title is-1">Visio App</h1>	
 	<div class="level">
 	<div class="level-left">
- <button id="invited" class="button is-success is-outlined is-right">
+ <button   id="invited" class="button is-success is-outlined is-right">
     <span class="icon is-small">
       <i class="fas fa-plus"></i>
     </span>
@@ -35,8 +37,7 @@
 <div class="columns is-multiline">
 
 
-  <img  src="https://bulma.io/images/placeholders/128x128.png">
-
+<div id="local"></div>
   <img src="https://bulma.io/images/placeholders/128x128.png">
 
 
@@ -145,13 +146,48 @@
 </div>
 </template>
 
+
+
 <script>
+
+import * as Video from 'twilio-video';
+
 
 export default {
   name: 'App',
-  components: {
-  }
+mounted(){
+
+function connect() {
+    let promise = new Promise((resolve, reject) => {
+        // get a token from the back end
+        let data;
+        fetch('http://0.0.0.0:5000/login', {
+            method: 'POST',
+            body: JSON.stringify({'username': 'remi'})
+        }).then(res => res.json()).then(_data => {
+            // join video call
+            data = _data;
+            return Video.connect(data.token);
+        }).catch(e => {
+            console.log(e);
+            reject();
+        });
+    });
+    return promise; }
+connect()
+
+function addLocalVideo() {
+        Video.createLocalVideoTrack().then(track => {
+        let video = document.getElementById('local');
+        let trackElement = track.attach();
+        video.appendChild(trackElement);
+    });
 }
+
+addLocalVideo()
+
+}
+ }	
 </script>
 
 <style>
@@ -214,4 +250,9 @@ margin-top:0.6rem;
 
 }
 
+#local{
+width:33%;
+padding: 1rem;
+
+}
 </style>
