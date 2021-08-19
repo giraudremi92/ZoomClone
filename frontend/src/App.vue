@@ -34,16 +34,11 @@
 
 </div>
      <div class="column col3">
-<div class="columns is-multiline">
+<div id="usersplace" class="columns is-multiline">
 
 
 <div id="local"></div>
-  <img src="https://bulma.io/images/placeholders/128x128.png">
 
-
-  <img  src="https://bulma.io/images/placeholders/128x128.png">
-
-  <img  src="https://bulma.io/images/placeholders/128x128.png">
 
 </div>
    </div>
@@ -51,7 +46,7 @@
 <div class="level">
 
 <div class="level-item">
- <button id="invited" class="button  is-success is-inverted is-outlined is-large ">
+ <button @click="sharescreen" id="invited" class="button  is-success is-inverted is-outlined is-large ">
     <span class="icon">
       <i class="fas fa-volume-up"></i>
     </span>
@@ -61,7 +56,7 @@
 </div>
 
 <div class="level-item">
- <button id="invited" class="button  is-success is-inverted is-outlined is-large ">
+ <button @click="mutevideo" id="invited" class="button  is-success is-inverted is-outlined is-large ">
     <span class="icon">
       <i class="fas fa-desktop"></i>
     </span>
@@ -71,7 +66,7 @@
 
 </div>
 
-<div class="level-item">
+<div @click="muteaudio" class="level-item">
  <button id="invited" class="button is-success is-inverted is-outlined is-large ">
     <span class="icon">
       <i class="fas fa-microphone"></i>
@@ -152,29 +147,80 @@
 
 import * as Video from 'twilio-video';
 
+let room;
+
+
 
 export default {
   name: 'App',
 mounted(){
 
+
 function connect() {
+let username = 'user' + Math.floor(Math.random() * 100);
+
+
     let promise = new Promise((resolve, reject) => {
         // get a token from the back end
         let data;
-        fetch('http://0.0.0.0:5000/login', {
+        fetch('login', {
             method: 'POST',
-            body: JSON.stringify({'username': 'remi'})
+            body: JSON.stringify({'username': username})
         }).then(res => res.json()).then(_data => {
             // join video call
             data = _data;
             return Video.connect(data.token);
+        }).then(_room => {
+            room = _room;
+		console.log('connected to room')
+            room.participants.forEach(participantConnected);
+            room.on('participantConnected', participantConnected);
+            room.on('participantDisconnected', participantDisconnected);
+            resolve();
         }).catch(e => {
             console.log(e);
             reject();
         });
     });
-    return promise; }
+    return promise;
+}
+
+
 connect()
+
+
+function participantConnected(participant) {
+  console.log('Participant "%s" connected', participant.identity);
+
+  const div = document.createElement('div');
+const usersplace = document.getElementById('usersplace');
+  div.id = participant.sid;
+  //div.innerText = participant.identity;
+div.classList.add('userscam');
+  participant.on('trackSubscribed', track => trackSubscribed(div, track));
+  participant.on('trackUnsubscribed', trackUnsubscribed);
+
+  participant.tracks.forEach(publication => {
+    if (publication.isSubscribed) {
+      trackSubscribed(div, publication.track);
+    }
+  });
+
+  usersplace.appendChild(div);
+}
+
+function participantDisconnected(participant) {
+  console.log('Participant "%s" disconnected', participant.identity);
+  document.getElementById(participant.sid).remove();
+}
+
+function trackSubscribed(div, track) {
+  div.appendChild(track.attach());
+}
+
+function trackUnsubscribed(track) {
+  track.detach().forEach(element => element.remove());
+}
 
 function addLocalVideo() {
         Video.createLocalVideoTrack().then(track => {
@@ -186,8 +232,34 @@ function addLocalVideo() {
 
 addLocalVideo()
 
-}
- }	
+},
+
+methods:{
+
+muteaudio: function(){
+
+room.localParticipant.audioTracks.forEach(publication => {
+  publication.track.disable();
+});      
+},
+
+mutevideo: function(){
+
+room.localParticipant.videoTracks.forEach(publication => {
+  publication.track.disable();
+});      
+},
+
+sharescreen: async function(){
+const stream = await navigator.mediaDevices.getDisplayMedia();
+const screenTrack = new Video.LocalVideoTrack(stream.getTracks()[0]);
+
+
+
+room.localParticipant.publishTrack(screenTrack);
+	}
+ }
+}	
 </script>
 
 <style>
@@ -254,5 +326,10 @@ margin-top:0.6rem;
 width:33%;
 padding: 1rem;
 
+}
+
+.userscam{
+width:33%;
+padding: 1rem;
 }
 </style>
